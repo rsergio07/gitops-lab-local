@@ -316,30 +316,6 @@ kubectl describe node <node-name>
 kubectl exec <pod-name> -n <namespace> -it -- sh
 ```
 
-## Cleanup
-
-Clean up all Phase 1 resources:
-```bash
-kubectl delete namespace demo-app
-kubectl delete pod fixed-image --force -n demo-app 2>/dev/null || true
-kubectl delete pod resource-fixed --force -n demo-app 2>/dev/null || true
-```
-
-Verify cleanup:
-```bash
-kubectl get all -n demo-app
-```
-
-Expected output:
-```
-No resources found in demo-app namespace.
-```
-
-Delete the namespace:
-```bash
-kubectl delete namespace demo-app
-```
-
 ## Common Issues
 
 **Cannot see events in kubectl describe:**

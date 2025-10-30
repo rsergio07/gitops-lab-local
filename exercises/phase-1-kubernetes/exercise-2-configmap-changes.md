@@ -206,10 +206,6 @@ kubectl get deployment demo-app -n demo-app -o yaml | grep -A 20 volumeMounts
 
 Note that environment variables provide simpler consumption but require restarts for updates, while volume mounts enable automatic updates but require application-level reload logic.
 
-## Cleanup
-
-Leave resources running for the next exercise. Resources will be cleaned up at the end of Phase 1.
-
 ## Common Issues
 
 **ConfigMap edit saved but values unchanged:**

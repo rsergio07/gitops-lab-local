@@ -251,15 +251,6 @@ Confirm successful completion by checking:
 
 6. Application responds to requests (from test pod or port-forward)
 
-## Cleanup
-
-Leave resources running for the next exercise. If you need to clean up:
-```bash
-kubectl delete namespace demo-app
-```
-
-This deletes the namespace and all resources within it.
-
 ## Common Issues
 
 **Pods stuck in ContainerCreating:**

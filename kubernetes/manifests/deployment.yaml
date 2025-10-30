@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+  namespace: demo-app
+  labels:
+    app: demo-app
+    version: v1
+spec:
+  # Maintain 2 replicas for basic high availability
+  replicas: 2
+  
+  # Selector must match the pod template labels
+  selector:
+    matchLabels:
+      app: demo-app
+  
+  # Rolling update strategy for zero-downtime deployments
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1        # Allow 1 extra pod during updates
+      maxUnavailable: 0  # Ensure no downtime during updates
+  
+  # Pod template defines the pods this Deployment creates
+  template:
+    metadata:
+      labels:
+        app: demo-app
+        version: v1
+    spec:
+      containers:
+      - name: demo-app
+        # Using a simple nginx image as placeholder
+        # Phase 2 will build custom application image
+        image: nginx:alpine
+        
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        
+        # Environment variables loaded from ConfigMap
+        envFrom:
+        - configMapRef:
+            name: demo-app-config
+        
+        # Resource limits prevent pods from consuming excessive resources
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        
+        # Liveness probe checks if container is healthy
+        # Kubernetes restarts container if probe fails
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        
+        # Readiness probe checks if container can serve traffic
+        # Service removes pod from endpoints if probe fails
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 2
+      
+      # Restart policy for failed containers
+      restartPolicy: Always

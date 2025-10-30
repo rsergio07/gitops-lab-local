@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-app-config
+  namespace: demo-app
+  labels:
+    app: demo-app
+data:
+  # Application environment configuration
+  APP_ENV: "development"
+  APP_NAME: "GitOps Demo Application"
+  
+  # Logging configuration
+  LOG_LEVEL: "info"
+  LOG_FORMAT: "json"
+  
+  # Application behavior settings
+  PORT: "8080"
+  WORKERS: "2"

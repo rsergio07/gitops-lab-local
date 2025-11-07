@@ -318,21 +318,28 @@ The curl command should return HTML content, confirming the container runs corre
    Expected output shows nginx startup messages.
 
 9. Test pod networking using port-forward
-   ```bash
-   kubectl port-forward test-pod -n validation-test 8081:80 &
-   ```
+```bash
+   kubectl port-forward test-pod -n validation-test 8081:80
+```
    
-   This runs port-forward in the background. Test connectivity:
-   ```bash
-   curl http://localhost:8081
-   ```
+   This command forwards traffic from your local port 8081 to the pod's port 80. The command will block and show forwarding status.
    
-   Expected output shows nginx welcome page HTML.
+   Expected output:
+```
+   Forwarding from 127.0.0.1:8081 -> 80
+   Forwarding from [::1]:8081 -> 80
+```
    
-   Stop the port-forward process:
-   ```bash
-   pkill -f "port-forward test-pod"
-   ```
+   **Open your web browser and navigate to:**
+```
+   http://localhost:8081
+```
+   
+   You should see the nginx welcome page displayed in your browser with the message "Welcome to nginx!"
+   
+   This confirms that Kubernetes networking functions correctly and you can access pod services from your local machine.
+   
+   Press Ctrl+C in the terminal to stop the port-forward when finished.
 
 10. Delete the test resources
     ```bash

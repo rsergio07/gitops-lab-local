@@ -1,6 +1,3 @@
-**File**: `exercises/phase-0-validation/README.md`
-
-```markdown
 # Phase 0: Environment Validation
 
 Verify your local GitOps environment is configured correctly before beginning technical exercises. This phase confirms the Kubernetes cluster is operational, container operations function correctly, and end-to-end connectivity works as expected.
@@ -504,4 +501,3 @@ Continue to [Phase 1: Kubernetes Review](../phase-1-kubernetes/README.md).
 
 **Video Tutorials:**
 - [Kubernetes Crash Course for Absolute Beginners (1 hour)](https://www.youtube.com/watch?v=s_o8dwzRlu4) - TechWorld with Nana
-```

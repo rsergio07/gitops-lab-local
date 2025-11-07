@@ -18,7 +18,7 @@ spec:
   - name: http
     protocol: TCP
     port: 8080        # Port exposed by the service
-    targetPort: 8080  # Port on the pod containers
+    targetPort: 80  # Port on the pod containers
   
   # Session affinity ensures requests from same client go to same pod
   # None = round-robin load balancing (default)

@@ -1,6 +1,6 @@
-# Contributing to SRE Automation Mastery
+# Contributing to GitOps Lab Local
 
-Thank you for your interest in contributing to this project. We welcome contributions that improve the course content, fix issues, or enhance the learning experience.
+Thank you for your interest in contributing to this project. We welcome contributions that improve the training content, fix issues, or enhance the learning experience.
 
 ## How to Contribute
 
@@ -28,8 +28,9 @@ If you find a bug, error, or have a suggestion:
 - Keep changes focused and atomic
 - Update documentation if you change functionality
 - Ensure all scripts remain compatible with macOS
-- Test setup and cleanup scripts before submitting
-- Follow existing code style and formatting
+- Test exercises end-to-end before submitting
+- Follow existing documentation style and formatting
+- Maintain the progressive learning structure across phases
 
 ## Types of Contributions
 
@@ -37,27 +38,58 @@ If you find a bug, error, or have a suggestion:
 - New exercises or improvements to existing ones
 - Clearer explanations or additional examples
 - Enhanced verification steps
+- Additional troubleshooting scenarios
 
 ### Documentation
 - Architecture diagrams and explanations
 - Troubleshooting guides
 - Best practices documentation
+- Video tutorial recommendations
+
+### Manifests and Configuration
+- Kubernetes manifest improvements
+- Helm chart enhancements
+- Terraform configuration refinements
+- ArgoCD application definitions
 
 ### Scripts and Automation
 - Setup script improvements
 - Additional utility scripts
 - Error handling enhancements
+- Validation scripts
 
 ### Bug Fixes
 - Fixing broken exercises
 - Correcting documentation errors
 - Resolving script issues
+- Updating outdated commands or outputs
+
+## Documentation Style
+
+When contributing documentation, please follow these guidelines:
+
+- Use professional, mentoring tone
+- No emojis in documentation
+- Include expected command outputs
+- Provide troubleshooting steps for common issues
+- Link to official documentation when referencing tools
+- Keep explanations concise and focused
+
+## Testing Your Contributions
+
+Before submitting:
+
+1. Run through affected exercises completely
+2. Verify all commands produce expected outputs
+3. Test on a clean Minikube environment
+4. Check that phase dependencies remain intact
 
 ## Code of Conduct
 
 - Be respectful and professional
 - Focus on constructive feedback
 - Help create a welcoming learning environment
+- Support learners of all skill levels
 
 ## Questions
 

@@ -85,11 +85,10 @@ Understanding kubeconfig structure is essential for multi-cluster management. In
 **Key Resources:**
 - [Kubernetes Components](https://kubernetes.io/docs/concepts/overview/components/)
 - [Minikube Documentation](https://minikube.sigs.k8s.io/docs/)
-- [kubectl Configuration](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)
 
 **Video Tutorials:**
 - [Minikube Tutorial for Beginners (12 min)](https://www.youtube.com/watch?v=E2pP1MOfo3g) - TechWorld with Nana
-- [Kubernetes Architecture Explained (15 min)](https://www.youtube.com/watch?v=8C_SCDbUJTg) - IBM Technology
+- [Kubernetes Explained (10 min)](https://www.youtube.com/watch?v=aSrqRSk43lY) - IBM Technology
 
 ## Hands-On Exercises
 

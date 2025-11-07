@@ -1,6 +1,9 @@
+**File**: `exercises/phase-0-validation/README.md`
+
+```markdown
 # Phase 0: Environment Validation
 
-Verify your local GitOps environment is configured correctly before beginning technical exercises. This phase confirms all required tools are installed, the Kubernetes cluster is operational, and basic functionality works as expected.
+Verify your local GitOps environment is configured correctly before beginning technical exercises. This phase confirms the Kubernetes cluster is operational, container operations function correctly, and end-to-end connectivity works as expected.
 
 ## Table of Contents
 
@@ -12,10 +15,9 @@ Verify your local GitOps environment is configured correctly before beginning te
   - [Container Runtime Architecture](#container-runtime-architecture)
   - [kubectl Configuration](#kubectl-configuration)
 - [Hands-On Exercises](#hands-on-exercises)
-  - [Exercise 1: Verify Tool Installations](#exercise-1-verify-tool-installations)
-  - [Exercise 2: Validate Kubernetes Cluster](#exercise-2-validate-kubernetes-cluster)
-  - [Exercise 3: Test Container Operations](#exercise-3-test-container-operations)
-  - [Exercise 4: Confirm Cluster Connectivity](#exercise-4-confirm-cluster-connectivity)
+  - [Exercise 1: Validate Kubernetes Cluster](#exercise-1-validate-kubernetes-cluster)
+  - [Exercise 2: Test Container Operations](#exercise-2-test-container-operations)
+  - [Exercise 3: Confirm Cluster Connectivity](#exercise-3-confirm-cluster-connectivity)
 - [Troubleshooting](#troubleshooting)
 - [Next Steps](#next-steps)
 - [Additional Resources](#additional-resources)
@@ -24,37 +26,37 @@ Verify your local GitOps environment is configured correctly before beginning te
 
 A properly configured local development environment is essential for effective GitOps learning. Before diving into Kubernetes deployments, Helm charts, or ArgoCD configurations, you must confirm that your foundational infrastructure works correctly. This validation phase prevents hours of frustration caused by misconfigured tools or incomplete installations.
 
-This phase walks through systematic verification of every component in your local stack. You will confirm that Colima provides a functional container runtime, Minikube runs a healthy Kubernetes cluster, kubectl communicates with the cluster API server, and all supporting tools are accessible. Each verification step includes expected outputs so you can identify problems immediately.
+This phase walks through systematic verification of every component in your local stack. You will confirm that Colima provides a functional container runtime, Minikube runs a healthy Kubernetes cluster, kubectl communicates with the cluster API server, and container operations work end-to-end. Each verification step includes expected outputs so you can identify problems immediately.
 
-Environment validation is not merely a checklist exercise. Understanding how these components interact—how Colima provides the Docker socket that Minikube uses, how kubectl authenticates to the API server, how Helm communicates with Kubernetes—builds the mental model necessary for troubleshooting complex issues later. The time invested in thorough validation pays dividends throughout the remaining phases.
+Environment validation is not merely a checklist exercise. Understanding how these components interact—how Colima provides the Docker socket that Minikube uses, how kubectl authenticates to the API server, how containers are scheduled and run—builds the mental model necessary for troubleshooting complex issues later. The time invested in thorough validation pays dividends throughout the remaining phases.
 
 ## Learning Objectives
 
 By completing this phase, you will be able to:
 
-1. Verify all required CLI tools are installed and accessible in your system PATH.
+1. Confirm the Minikube Kubernetes cluster is running and all system pods are healthy.
 
-2. Confirm the Minikube Kubernetes cluster is running and all system pods are healthy.
+2. Validate kubectl can communicate with the Kubernetes API server and execute basic commands.
 
-3. Validate kubectl can communicate with the Kubernetes API server and execute basic commands.
+3. Test Docker container operations including image pulls, container creation, networking, and log inspection.
 
-4. Test Docker container operations including image pulls, container creation, and log inspection.
+4. Demonstrate basic Kubernetes operations by deploying a test pod and confirming it reaches Running state.
 
-5. Demonstrate basic Kubernetes operations by deploying a test pod and confirming it reaches Running state.
+5. Execute commands inside running pods and retrieve their logs for debugging purposes.
 
-6. Identify and resolve common environment setup issues using diagnostic commands and log analysis.
+6. Identify and resolve common environment setup issues using diagnostic commands and systematic troubleshooting.
 
 ## Prerequisites
 
 Before starting this phase, ensure you have:
 
-1. **macOS 11.0 or later** - Required for Colima compatibility
+1. **Completed Prerequisites** - All steps in [PREREQUISITES.md](../../PREREQUISITES.md) including running `./scripts/setup-macos.sh`
 
-2. **Setup Script Execution** - You must have run `./scripts/setup-macos.sh` successfully
+2. **Verified Tool Installation** - All commands from PREREQUISITES.md verification section executed successfully
 
 3. **System Resources Available** - Minimum 8GB RAM, 4 CPU cores, 50GB disk space
 
-4. **Terminal Access** - Familiarity with command-line operations
+4. **Colima and Minikube Running** - Both services started and operational
 
 ## Theoretical Foundation
 
@@ -88,101 +90,52 @@ Understanding kubeconfig structure is essential for multi-cluster management. In
 
 **Video Tutorials:**
 - [Minikube Tutorial for Beginners (12 min)](https://www.youtube.com/watch?v=E2pP1MOfo3g) - TechWorld with Nana
-- [Kubernetes Explained (10 min)](https://www.youtube.com/watch?v=aSrqRSk43lY) - IBM Technology
+- [Kubernetes Explained in 6 Minutes (6 min)](https://www.youtube.com/watch?v=TlHvYWVUZyc) - ByteByteGo
 
 ## Hands-On Exercises
 
-### Exercise 1: Verify Tool Installations
-
-**Objective:** Confirm all required command-line tools are installed and report their versions.
-
-**Steps:**
-
-1. Check Colima installation and status
-```bash
-   colima version
-   colima status
-```
-   
-   Expected output shows Colima version and status "Running". If status shows "Stopped", start Colima:
-```bash
-   colima start
-```
-
-2. Verify Docker CLI is accessible
-```bash
-   docker --version
-   docker ps
-```
-   
-   Expected output shows Docker version and running containers list (may be empty). If you see "Cannot connect to the Docker daemon", Colima is not running.
-
-3. Check Minikube installation
-```bash
-   minikube version
-   minikube status
-```
-   
-   Expected output shows Minikube version and cluster status. All components should show "Running" or "Configured".
-
-4. Verify kubectl installation
-```bash
-   kubectl version --client
-```
-   
-   Expected output shows kubectl client version. Server version check comes in the next exercise.
-
-5. Check Helm installation
-```bash
-   helm version
-```
-   
-   Expected output shows Helm version information.
-
-6. Verify Terraform installation
-```bash
-   terraform version
-```
-   
-   Expected output shows Terraform version.
-
-**Verification:**
-
-All commands should execute without errors and display version information. If any command fails with "command not found", the tool is not installed or not in your PATH. Re-run the setup script:
-```bash
-./scripts/setup-macos.sh
-```
-
-### Exercise 2: Validate Kubernetes Cluster
+### Exercise 1: Validate Kubernetes Cluster
 
 **Objective:** Confirm the Minikube Kubernetes cluster is healthy and all system components are operational.
 
 **Steps:**
 
 1. Display cluster information
-```bash
+   ```bash
    kubectl cluster-info
-```
+   ```
    
    Expected output shows Kubernetes control plane running at a URL like `https://127.0.0.1:xxxxx` and CoreDNS running.
 
-2. List all nodes in the cluster
-```bash
+2. Verify the current kubectl context
+   ```bash
+   kubectl config current-context
+   ```
+   
+   Expected output: `minikube`
+   
+   If the context is not minikube, switch to it:
+   ```bash
+   kubectl config use-context minikube
+   ```
+
+3. List all nodes in the cluster
+   ```bash
    kubectl get nodes
-```
+   ```
    
    Expected output:
-```
+   ```
    NAME       STATUS   ROLES           AGE   VERSION
    minikube   Ready    control-plane   10m   v1.28.x
-```
+   ```
    
    The STATUS must be "Ready". AGE shows how long since the cluster started.
 
-3. Check system pods are running
-```bash
+4. Check system pods are running
+   ```bash
    kubectl get pods -n kube-system
-```
+   ```
    
    Expected output shows multiple pods with STATUS "Running". Key pods include:
    - coredns (DNS service)
@@ -192,142 +145,203 @@ All commands should execute without errors and display version information. If a
    - kube-scheduler (pod placement)
    - kube-proxy (network proxy)
 
-4. Verify cluster resource availability
-```bash
+5. Verify cluster resource availability
+   ```bash
    kubectl top node
-```
+   ```
    
    Expected output shows CPU and memory usage for the cluster node. If this command fails with "Metrics API not available", enable the metrics-server addon:
-```bash
+   ```bash
    minikube addons enable metrics-server
-```
+   kubectl wait --for=condition=available --timeout=60s deployment/metrics-server -n kube-system
+   ```
+   
+   Retry the `kubectl top node` command after metrics-server is ready.
+
+6. List all available namespaces
+   ```bash
+   kubectl get namespaces
+   ```
+   
+   Expected output shows default namespaces including default, kube-system, kube-public, and kube-node-lease.
 
 **Verification:**
 
 All system pods should show STATUS "Running" and READY column showing "1/1" or appropriate numbers. The cluster node must show STATUS "Ready". Any pods in "Pending", "CrashLoopBackOff", or "Error" states indicate cluster problems requiring troubleshooting.
 
-### Exercise 3: Test Container Operations
+### Exercise 2: Test Container Operations
 
-**Objective:** Validate Docker functionality by pulling images, running containers, and inspecting their state.
+**Objective:** Validate Docker functionality by pulling images, running containers, inspecting their state, and verifying networking.
 
 **Steps:**
 
 1. Pull a test container image
-```bash
+   ```bash
    docker pull nginx:alpine
-```
+   ```
    
    Expected output shows download progress for image layers. This confirms Docker can reach container registries and store images locally.
 
 2. List downloaded images
-```bash
+   ```bash
    docker images nginx
-```
+   ```
    
    Expected output:
-```
+   ```
    REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
    nginx        alpine    xxxxx          2 days ago    40MB
-```
+   ```
 
 3. Run a container from the image
-```bash
+   ```bash
    docker run -d --name test-nginx -p 8080:80 nginx:alpine
-```
+   ```
    
    Expected output shows a long container ID. The `-d` flag runs the container in background, `--name` assigns a friendly name, and `-p` maps port 8080 on your host to port 80 in the container.
 
 4. Verify the container is running
-```bash
+   ```bash
    docker ps
-```
+   ```
    
    Expected output shows the test-nginx container with STATUS "Up".
 
 5. Test the running container
-```bash
+   ```bash
    curl http://localhost:8080
-```
+   ```
    
    Expected output shows HTML from the nginx welcome page.
 
 6. View container logs
-```bash
+   ```bash
    docker logs test-nginx
-```
+   ```
    
-   Expected output shows nginx access logs including the curl request.
+   Expected output shows nginx access logs including the curl request from step 5.
 
-7. Stop and remove the test container
-```bash
+7. Inspect container details
+   ```bash
+   docker inspect test-nginx
+   ```
+   
+   Expected output shows detailed JSON configuration including network settings, mounts, and environment variables.
+
+8. Stop and remove the test container
+   ```bash
    docker stop test-nginx
    docker rm test-nginx
-```
+   ```
+
+9. Verify container removal
+   ```bash
+   docker ps -a | grep test-nginx
+   ```
+   
+   Expected output is empty, confirming the container was removed.
 
 **Verification:**
 
 The curl command should return HTML content, confirming the container runs correctly and port mapping works. If curl fails, check `docker ps` shows the container running and the PORT column shows "0.0.0.0:8080->80/tcp".
 
-### Exercise 4: Confirm Cluster Connectivity
+### Exercise 3: Confirm Cluster Connectivity
 
 **Objective:** Deploy a test pod to Kubernetes and verify it runs successfully, demonstrating end-to-end cluster functionality.
 
 **Steps:**
 
 1. Create a test namespace
-```bash
+   ```bash
    kubectl create namespace validation-test
-```
+   ```
    
    Expected output: `namespace/validation-test created`
 
 2. Deploy a test pod
-```bash
+   ```bash
    kubectl run test-pod --image=nginx:alpine --namespace=validation-test
-```
+   ```
    
    Expected output: `pod/test-pod created`
 
 3. Watch the pod until it reaches Running state
-```bash
+   ```bash
    kubectl get pod test-pod -n validation-test --watch
-```
+   ```
    
    Expected progression:
-```
+   ```
    NAME       READY   STATUS              RESTARTS   AGE
    test-pod   0/1     ContainerCreating   0          5s
    test-pod   1/1     Running             0          10s
-```
+   ```
    
    Press Ctrl+C once STATUS shows "Running".
 
 4. Describe the pod to view detailed information
-```bash
+   ```bash
    kubectl describe pod test-pod -n validation-test
-```
+   ```
    
    Expected output shows events including image pull, container creation, and pod start. The Events section at the bottom should show "Successfully pulled image" and "Started container".
 
-5. Execute a command inside the pod
-```bash
+5. View the pod's YAML definition
+   ```bash
+   kubectl get pod test-pod -n validation-test -o yaml
+   ```
+   
+   This shows the complete pod specification as Kubernetes stored it, including fields Kubernetes added automatically.
+
+6. Execute a command inside the pod
+   ```bash
    kubectl exec test-pod -n validation-test -- nginx -v
-```
+   ```
    
    Expected output: `nginx version: nginx/x.xx.x`
 
-6. View pod logs
-```bash
+7. Start an interactive shell inside the pod
+   ```bash
+   kubectl exec test-pod -n validation-test -it -- sh
+   ```
+   
+   This opens a shell prompt inside the container. Test the environment:
+   ```bash
+   # Inside the pod
+   hostname
+   cat /etc/os-release
+   exit
+   ```
+
+8. View pod logs
+   ```bash
    kubectl logs test-pod -n validation-test
-```
+   ```
    
    Expected output shows nginx startup messages.
 
-7. Delete the test resources
-```bash
-   kubectl delete pod test-pod -n validation-test
-   kubectl delete namespace validation-test
-```
+9. Test pod networking using port-forward
+   ```bash
+   kubectl port-forward test-pod -n validation-test 8081:80 &
+   ```
+   
+   This runs port-forward in the background. Test connectivity:
+   ```bash
+   curl http://localhost:8081
+   ```
+   
+   Expected output shows nginx welcome page HTML.
+   
+   Stop the port-forward process:
+   ```bash
+   pkill -f "port-forward test-pod"
+   ```
+
+10. Delete the test resources
+    ```bash
+    kubectl delete pod test-pod -n validation-test
+    kubectl delete namespace validation-test
+    ```
 
 **Verification:**
 
@@ -337,12 +351,13 @@ The pod must reach "Running" status with READY showing "1/1". If the pod stays i
 
 You have successfully completed Phase 0 when:
 
-1. All tool version commands execute without errors
-2. Minikube status shows all components running
-3. kubectl can communicate with the cluster and list nodes
+1. Minikube cluster shows all components running
+2. kubectl communicates with the cluster and lists nodes
+3. All system pods in kube-system namespace are Running
 4. Docker can pull images, run containers, and handle networking
 5. Kubernetes can schedule pods and they reach Running state
 6. You can execute commands inside pods and view their logs
+7. Port-forwarding enables access to pod services
 
 ## Troubleshooting
 
@@ -406,6 +421,48 @@ kubectl config use-context minikube
 kubectl cluster-info
 ```
 
+### Metrics Server Not Available
+
+**Symptoms:**
+`kubectl top node` fails with "Metrics API not available"
+
+**Diagnosis:**
+```bash
+kubectl get deployment metrics-server -n kube-system
+```
+
+**Resolution:**
+```bash
+minikube addons enable metrics-server
+kubectl wait --for=condition=available --timeout=60s deployment/metrics-server -n kube-system
+```
+
+### Pod Stuck in ContainerCreating
+
+**Symptoms:**
+Pod remains in ContainerCreating status for more than 60 seconds
+
+**Diagnosis:**
+```bash
+kubectl describe pod <pod-name> -n <namespace>
+```
+
+Look for events indicating image pull issues or resource constraints.
+
+**Resolution:**
+
+For image pull issues:
+```bash
+# Verify Docker can pull the image
+docker pull <image-name>
+```
+
+For resource constraints:
+```bash
+# Check node resources
+kubectl describe node minikube
+```
+
 ### Insufficient System Resources
 
 **Symptoms:**
@@ -434,17 +491,17 @@ colima start --cpu 4 --memory 6 --disk 40
 
 ## Next Steps
 
-After successfully validating your environment, proceed to Phase 1 where you will deploy applications to Kubernetes using raw YAML manifests. This phase builds on your confirmed working environment to explore Kubernetes resource definitions, pod lifecycle management, and basic troubleshooting techniques.
+After successfully validating your environment, proceed to Phase 1 where you will deploy applications to Kubernetes using raw YAML manifests. This phase builds on your confirmed working environment to explore Kubernetes resource definitions, pod lifecycle management, and troubleshooting techniques.
 
 Continue to [Phase 1: Kubernetes Review](../phase-1-kubernetes/README.md).
 
 ## Additional Resources
 
 **Official Documentation:**
-- [Colima GitHub Repository](https://github.com/abiosoft/colima)
-- [Minikube Getting Started](https://minikube.sigs.k8s.io/docs/start/)
 - [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+- [kubectl Reference Documentation](https://kubernetes.io/docs/reference/kubectl/)
+- [Minikube Commands](https://minikube.sigs.k8s.io/docs/commands/)
 
 **Video Tutorials:**
-- [Docker for Beginners (13 min)](https://www.youtube.com/watch?v=pg19Z8LL06w) - TechWorld with Nana
-- [kubectl Command Basics (11 min)](https://www.youtube.com/watch?v=o-K7HcG5v7w) - KodeKloud
+- [Kubernetes Crash Course for Absolute Beginners (1 hour)](https://www.youtube.com/watch?v=s_o8dwzRlu4) - TechWorld with Nana
+```

@@ -115,7 +115,7 @@ ConfigMap data is stored in etcd without encryption by default. Never store sens
 - [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/)
 
 **Video Tutorials:**
-- [Kubernetes Deployments Explained (10 min)](https://www.youtube.com/watch?v=mNK14yXIZF4) - TechWorld with Nana
+- [Kubernetes Deployments: Get Started Fast (4 min)](https://www.youtube.com/watch?v=Sulw5ndbE88) - IBM Technology
 - [Kubernetes Services Explained (13 min)](https://www.youtube.com/watch?v=T4Z7visMM4E) - TechWorld with Nana
 
 ## Hands-On Exercises
@@ -275,4 +275,3 @@ Continue to [Phase 2: Containerization Basics](../phase-2-docker/README.md).
 
 **Video Tutorials:**
 - [Kubernetes ConfigMaps and Secrets (12 min)](https://www.youtube.com/watch?v=FAnQTgr04mU) - TechWorld with Nana
-- [Debugging Kubernetes Deployments (14 min)](https://www.youtube.com/watch?v=T4Z7visMM4E) - KodeKloud

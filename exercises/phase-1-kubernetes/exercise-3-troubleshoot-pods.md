@@ -338,3 +338,11 @@ You have successfully completed this exercise when you can:
 - Recognize resource constraint symptoms and check node capacity
 - Use kubectl logs with --previous flag to debug crashed containers
 - Understand how health probe failures cause restarts
+
+## Next Steps
+
+You have successfully diagnosed and resolved common Kubernetes pod failures. You now have the troubleshooting skills necessary to identify and fix issues in production environments.
+
+You have completed Phase 1 and understand the foundational Kubernetes resources that all applications use. Phase 2 introduces containerization, where you will build Docker images for the demo application and understand how container images are constructed, layered, and optimized for production use.
+
+Continue to [Phase 2: Containerization Basics](../phase-2-docker/README.md).

@@ -224,3 +224,11 @@ You have successfully completed this exercise when:
 - All pods have been recreated with new names
 - Application responses reflect the new configuration
 - You understand when pod restarts are required for ConfigMap changes
+
+## Next Steps
+
+You have successfully updated application configuration and observed how Kubernetes handles ConfigMap changes. You now understand the difference between environment variable and volume mount approaches, and when pod restarts are required.
+
+In the next exercise, you will build troubleshooting skills by diagnosing and resolving common pod failure scenarios using kubectl diagnostic commands.
+
+Continue to [Exercise 3: Troubleshoot Pods](exercise-3-troubleshoot-pods.md).

@@ -269,3 +269,11 @@ You have successfully completed this exercise when:
 - Service has endpoints for both pods
 - curl commands from test pod return successful responses
 - Logs show request activity from your tests
+
+## Next Steps
+
+You have successfully deployed an application to Kubernetes using raw YAML manifests. You now understand how Deployments, Services, and ConfigMaps work together to run applications in Kubernetes.
+
+In the next exercise, you will learn how to modify application configuration through ConfigMaps and observe how Kubernetes propagates these changes to running pods.
+
+Continue to [Exercise 2: ConfigMap Changes](exercise-2-configmap-changes.md).

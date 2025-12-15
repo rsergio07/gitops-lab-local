@@ -264,7 +264,7 @@ For this training using public images, typos in the image name are the most comm
 
 After successfully deploying applications with raw Kubernetes manifests, you understand the foundational resources that all Kubernetes applications use. Phase 2 introduces containerization, where you will build Docker images for the demo application and understand how container images are constructed, layered, and optimized for production use.
 
-Continue to [Phase 2: Containerization Basics](../phase-2-docker/README.md).
+Continue to [Phase 2: Containerization Basics](../phase-2-containerization/README.md).
 
 ## Additional Resources
 

@@ -88,12 +88,29 @@ Containers are not inherently secure. Follow these practices to reduce risk:
 
 ## Hands‑On Exercises
 
-This phase includes four practical exercises. Each exercise has its own markdown file with detailed instructions and ends with a *Next Steps* section to guide your progression:
+### Exercise 1: Container Basics
 
-1. **[Exercise 1: Container Basics](exercise-1-container-basics.md)** – build and run a simple Python web application in a container.
-2. **[Exercise 2: Dockerfile Best Practices](exercise-2-dockerfile-best-practices.md)** – optimise your image with a `.dockerignore` and multi‑stage builds.
-3. **[Exercise 3: Local Registry](exercise-3-local-registry.md)** – start a local registry, tag and push your image, then pull it back.
-4. **[Exercise 4: Kubernetes Integration](exercise-4-kubernetes-integration.md)** – deploy your custom image to Kubernetes and expose it via a Service.
+**Objective:** Build and run a simple Python web application inside a container to understand the fundamentals of containerization.
+
+See [exercise-1-container-basics.md](exercise-1-container-basics.md) for complete instructions.
+
+### Exercise 2: Dockerfile Best Practices
+
+**Objective:** Optimize your container image by applying Dockerfile best practices, including the use of `.dockerignore` and multi‑stage builds.
+
+See [exercise-2-dockerfile-best-practices.md](exercise-2-dockerfile-best-practices.md) for complete instructions.
+
+### Exercise 3: Local Registry
+
+**Objective:** Set up a local container registry, tag and push your image to it, then pull the image back to validate the workflow.
+
+See [exercise-3-local-registry.md](exercise-3-local-registry.md) for complete instructions.
+
+### Exercise 4: Kubernetes Integration
+
+**Objective:** Deploy your custom image to Kubernetes and expose it via a Service, integrating container workflows with cluster orchestration.
+
+See [exercise-4-kubernetes-integration.md](exercise-4-kubernetes-integration.md) for complete instructions.
 
 ## Troubleshooting
 

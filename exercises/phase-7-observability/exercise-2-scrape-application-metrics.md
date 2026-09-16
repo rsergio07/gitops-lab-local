@@ -24,30 +24,48 @@ In your Helm chart's deployment template (`exercises/phase-4-gitops/demo-app/tem
 
 ### 2. Enable nginx's stub status endpoint
 
-Add an nginx configuration snippet exposing `/stub_status` internally. The simplest approach for this training is a small ConfigMap mounted into the nginx container at `/etc/nginx/conf.d/stub_status.conf`:
+Add a `/stub_status` location so the exporter has something to scrape. Don't add a second `server {}` block in `conf.d/` for this — nginx only routes unmatched requests to one default server per port, so a separate block with no distinguishing `server_name` is unreachable in practice. Instead, override nginx's own `default.conf` with a ConfigMap that includes both the app's root location and `/stub_status` in the same server block:
 
 ```yaml
 server {
   listen 80;
+  server_name _;
+
   location /stub_status {
     stub_status on;
     allow 127.0.0.1;
     deny all;
   }
+
+  location / {
+    root   /usr/share/nginx/html;
+    index  index.html index.htm;
+  }
 }
 ```
 
-Reference this ConfigMap as a volume mount in your deployment template alongside the existing `nginx` container.
+Mount this ConfigMap into the `nginx` container at `/etc/nginx/conf.d/default.conf`, using `subPath: default.conf` so it replaces just that one file rather than the whole directory:
+
+```yaml
+          volumeMounts:
+            - name: nginx-default-conf
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: default.conf
+      volumes:
+        - name: nginx-default-conf
+          configMap:
+            name: nginx-default-conf
+```
 
 ### 3. Expose the metrics port on the Service
 
-Add the exporter's port to your chart's Service template:
+Add the exporter's port to your chart's Service template. The container listens on port 80 (see your Phase 1 Deployment), so `targetPort` for `http` must be `80`:
 
 ```yaml
   ports:
     - name: http
-      port: 80
-      targetPort: 8080
+      port: 8080
+      targetPort: 80
     - name: metrics
       port: 9113
       targetPort: 9113
@@ -122,7 +140,7 @@ Check its logs directly:
 kubectl logs <pod-name> -n gitops-demo -c metrics-exporter
 ```
 
-A connection refused error usually means the stub status ConfigMap isn't mounted correctly or nginx hasn't picked it up — confirm the volume mount path matches nginx's `conf.d` include pattern.
+A connection refused error usually means the `default.conf` ConfigMap isn't mounted correctly. Confirm the `subPath` matches the ConfigMap key exactly (`default.conf`) and that the mount path is `/etc/nginx/conf.d/default.conf`, not the directory.
 
 ### Metrics show but all values are zero
 

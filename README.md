@@ -8,6 +8,7 @@ A comprehensive local training environment for learning GitOps workflows using A
 - [Learning Objectives](#learning-objectives)
 - [Prerequisites](#prerequisites)
 - [Learning Path Overview](#learning-path-overview)
+- [Fast Path: Explore the Full Environment (Optional)](#fast-path-explore-the-full-environment-optional)
 - [Contributing](#contributing)
 - [License](#license)
 - [Ready to Begin Your GitOps Journey?](#ready-to-begin-your-gitops-journey)
@@ -75,6 +76,12 @@ Build progressive CI/CD pipelines that automate the entire deployment lifecycle.
 Deploy Prometheus and Grafana for comprehensive observability. Configure ServiceMonitors for application metrics scraping, write PromQL queries, create Grafana dashboards, and correlate deployment events with system metrics changes.
 
 Total estimated time: 20-27 hours of hands-on work. Phases can be completed at your own pace, with each phase providing clear completion criteria before advancing to the next.
+
+## Fast Path: Explore the Full Environment (Optional)
+
+`./scripts/bootstrap-full-environment.sh` provisions the final state of the lab in one step, for anyone who wants to explore or experiment with the finished environment instead of working through the phases. It is **not** part of the learning path and skips the manual work that actually teaches the concepts — Phases 1-7 remain the intended way to learn this material.
+
+Two gaps are intentional, not bugs: ArgoCD is installed but not wired to a live Git sync (that requires your own fork, which is the point of Phase 4), and GitHub Actions (Phase 6) can't run locally, so it's skipped entirely. Tear it down with `./scripts/teardown-full-environment.sh`.
 
 ## Contributing
 

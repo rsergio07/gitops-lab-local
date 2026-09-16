@@ -5,27 +5,35 @@ set -e
 CHART_DIR="exercises/phase-4-gitops/demo-app"
 NAMESPACE="gitops-demo"
 
-echo "[INFO] Writing stub_status ConfigMap"
-cat <<EOF > "$CHART_DIR/templates/stub-status-configmap.yaml"
+echo "[INFO] Writing default.conf ConfigMap (overrides nginx's own default.conf so"
+echo "       / and /stub_status are served from the same server block)"
+cat <<EOF > "$CHART_DIR/templates/nginx-conf-configmap.yaml"
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nginx-stub-status
+  name: nginx-default-conf
   labels:
     app: demo-app
 data:
-  stub_status.conf: |
+  default.conf: |
     server {
       listen 80;
+      server_name _;
+
       location /stub_status {
         stub_status on;
         allow 127.0.0.1;
         deny all;
       }
+
+      location / {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+      }
     }
 EOF
 
-echo "[SUCCESS] Wrote $CHART_DIR/templates/stub-status-configmap.yaml"
+echo "[SUCCESS] Wrote $CHART_DIR/templates/nginx-conf-configmap.yaml"
 echo ""
 echo "[INFO] Add this sidecar container to your deployment template's containers list:"
 cat <<'EOF'
@@ -39,7 +47,9 @@ cat <<'EOF'
 EOF
 
 echo ""
-echo "[INFO] Mount the ConfigMap into the nginx container and add the port to your Service, then run:"
+echo "[INFO] Mount the ConfigMap into the nginx container at /etc/nginx/conf.d/default.conf (subPath: default.conf),"
+echo "       add the metrics port to your Service (targetPort 80 for http, matching the container's actual port),"
+echo "       then run:"
 echo "  helm upgrade demo-app $CHART_DIR -n $NAMESPACE"
 echo ""
 echo "[INFO] Writing ServiceMonitor"
